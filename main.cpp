@@ -1,46 +1,43 @@
 #include <iostream>
-#include <vector>
+#include <string>
 
 using namespace std;
 
-int n, k = 1, p1, p2;
-vector<vector<int>> a;
+int countZeros(const string& s)
+{
+    if (s.size() == 1)
+    {
+        if (s == "1") return 0;
+        if (s == "0") return 1;
+    }
+    return (s[0] == '0') + countZeros(s.substr(1, s.size() - 1));
+}
+
+int findMaxDigit(const int a[], const int n)
+{
+    if (n == 1) return a[0];
+    return max(a[n - 1], findMaxDigit(a, n - 1));
+}
+
+long sumDigits(const int a[], const int n)
+{
+    if (n == 1) return a[0];
+    return a[n - 1] + sumDigits(a, n - 1);
+}
+
+string rvString(const string& s)
+{
+    if (s.empty()) return "";
+    if (s.size() == 1) return s;
+    return s[s.size() - 1] + rvString(s.substr(0, s.size() - 1));
+}
+
+long int s = 0;
+
+const int a[] = {1, 2, 3, 6, 5, 0, 10, 2};
 
 int main()
 {
-    cin >> n;
-    a.resize(n);
-    for (int i = 0; i < n; i++)
-    {
-        a[i].resize(n);
-    }
-
-    int x = 0, y = n / 2;
-
-    while (k <= n * n)
-    {
-        if (a[x][y] != 0)
-        {
-            x = p1 + 1;
-            if (x >= n) x = 0;
-            y = p2;
-        }
-        a[x][y] = k;
-        ++k;
-        p1 = x;
-        p2 = y;
-        ++y;
-        if (y >= n)
-        {
-            y = 0;
-        }
-        --x;
-        if (x < 0) x = n - 1;
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        cout << a[n / 2][i] << ' ';
-    }
+    cout << rvString("abc");
     return 0;
 }
